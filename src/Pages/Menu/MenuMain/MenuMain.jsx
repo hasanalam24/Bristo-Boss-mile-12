@@ -42,16 +42,16 @@ const MenuMain = () => {
 
             {/* dessert menu items */}
 
-            <MenuCategory items={dessert} title="Dessert" coverImg={dessertBg}></MenuCategory>
+            <MenuCategory items={dessert} title="dessert" coverImg={dessertBg}></MenuCategory>
 
             {/* pizza */}
-            <MenuCategory items={pizza} title="Pizza" coverImg={pizzaBg}></MenuCategory>
+            <MenuCategory items={pizza} title="pizza" coverImg={pizzaBg}></MenuCategory>
 
             {/* salad */}
-            <MenuCategory items={salad} title="Salad" coverImg={saladBg}></MenuCategory>
+            <MenuCategory items={salad} title="salad" coverImg={saladBg}></MenuCategory>
 
             {/* soup */}
-            <MenuCategory items={soup} title="Soup" coverImg={soupBg}></MenuCategory>
+            <MenuCategory items={soup} title="soup" coverImg={soupBg}></MenuCategory>
         </div>
     );
 };
