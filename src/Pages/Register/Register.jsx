@@ -5,19 +5,30 @@ import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 
 const Register = () => {
-    const { signUpUser } = useContext(AuthContext)
+    const { signUpUser, userUpdateProfile } = useContext(AuthContext)
     const {
         register,
         handleSubmit,
-
+        reset,
         formState: { errors },
     } = useForm()
     const onSubmit = (data) => {
         console.log(data)
         signUpUser(data.email, data.password)
             .then(result => {
-                console.log(result.user)
-                alert('register done')
+
+
+                userUpdateProfile(data.name, data.photoURL)
+                    .then(() => {
+                        console.log(result.user)
+                        reset()
+                        alert('register done')
+
+                    }).catch((error) => {
+                        // An error occurred
+                        console.log(error.message)
+                        // ...
+                    });
             })
             .catch(error => {
                 console.log(error.message)
@@ -61,6 +72,13 @@ const Register = () => {
                                 </label>
                                 <input name="name" {...register("name", { required: true })} type="name" placeholder="Name" className="input input-bordered" required />
                                 {errors.name && <span className="text-red-600">User name is required</span>}
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">PhotoURL</span>
+                                </label>
+                                <input name="photo" {...register("photoURL", { required: true })} type="text" placeholder="Photo URL" className="input input-bordered" required />
+                                {errors.photoURL && <span className="text-red-600">PhotoURL is required</span>}
                             </div>
                             <div className="form-control">
                                 <label className="label">
