@@ -7,14 +7,14 @@ const useCart = () => {
     const axiosSecure = useAxiosSecure()
     const { user } = useAuth()
     //tan stack query
-    const { data: cart = [] } = useQuery({
+    const { data: cart = [], refetch } = useQuery({
         queryKey: ['cart', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/carts?email=${user.email}`)
             return res.data
         }
     })
-    return [cart]
+    return [cart, refetch]
 };
 
 export default useCart;
