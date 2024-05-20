@@ -1,7 +1,39 @@
+import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const FoodCart = ({ item }) => {
-
+    const { user } = useAuth()
     const { name, price, image, recipe } = item;
+    const navigate = useNavigate()
+
+    const handleAddCart = food => {
+        if (user && user.email) {
+            // TODO: send cart item to the database
+        }
+        else {
+            Swal.fire({
+                title: "Your are not Login",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes. Login!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+
+                    // Swal.fire({
+                    //     title: "Deleted!",
+                    //     text: "Your file has been deleted.",
+                    //     icon: "success"
+                    // });
+                    navigate('/login')
+                }
+            });
+        }
+    }
 
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
@@ -11,7 +43,9 @@ const FoodCart = ({ item }) => {
                 <h2 className="card-title ">{name}</h2>
                 <p>{recipe}</p>
                 <div className="card-actions justify-end">
-                    <button className="btn btn-outline border-0 border-b-4 mt-4 bg-slate-200 border-orange-400">Add to Cart</button>
+                    <button
+                        onClick={() => handleAddCart(item)}
+                        className="btn btn-outline border-0 border-b-4 mt-4 bg-slate-200 border-orange-400">Add to Cart</button>
                 </div>
             </div>
         </div>

@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 
 const Register = () => {
     const { signUpUser, userUpdateProfile } = useContext(AuthContext)
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -23,6 +24,7 @@ const Register = () => {
                         console.log(result.user)
                         reset()
                         alert('register done')
+                        navigate('/')
 
                     }).catch((error) => {
                         // An error occurred
