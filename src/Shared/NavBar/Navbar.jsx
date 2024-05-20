@@ -15,7 +15,7 @@ const Navbar = () => {
         <li><Link to="/login">Login</Link></li>
         <li><Link to="/secret">Secret</Link></li>
         <li>
-            <Link to="/">
+            <Link to="/dashboard/cart">
                 <button className="btn">
                     <TiShoppingCart></TiShoppingCart>
                     <div className="badge badge-secondary">+{cart.length}</div>
