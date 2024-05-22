@@ -3,8 +3,16 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
+import useAxiosCommon from "../../Hooks/useAxiosCommon";
+
+
+
 
 const Register = () => {
+
+    const axiosCommon = useAxiosCommon()
+
     const { signUpUser, userUpdateProfile } = useContext(AuthContext)
     const navigate = useNavigate()
     const {
@@ -13,18 +21,37 @@ const Register = () => {
         reset,
         formState: { errors },
     } = useForm()
+
+
     const onSubmit = (data) => {
-        console.log(data)
+        // console.log(data)
         signUpUser(data.email, data.password)
-            .then(result => {
-
-
+            .then(() => {
                 userUpdateProfile(data.name, data.photoURL)
                     .then(() => {
-                        console.log(result.user)
-                        reset()
-                        alert('register done')
-                        navigate('/')
+
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        }
+
+                        axiosCommon.post('/users', userInfo)
+                            .then(res => {
+                                console.log('user added to the db')
+                                if (res.data.insertedId) {
+                                    reset()
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'User Created Successfully',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    navigate('/')
+
+                                }
+                            })
+
 
                     }).catch((error) => {
                         // An error occurred
