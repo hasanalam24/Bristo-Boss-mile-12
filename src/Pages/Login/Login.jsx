@@ -3,6 +3,7 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import { AuthContext } from '../../Providers/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import SocialLogin from '../../Components/SocialLogin/SocialLogin';
 
 const Login = () => {
 
@@ -91,6 +92,10 @@ const Login = () => {
                             </div>
                         </form>
                         <Link to="/register">Register</Link>
+
+                        <div className="divider"></div>
+
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
 

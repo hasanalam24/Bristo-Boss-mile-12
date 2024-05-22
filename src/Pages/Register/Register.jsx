@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import useAxiosCommon from "../../Hooks/useAxiosCommon";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 
 
@@ -140,6 +141,8 @@ const Register = () => {
                             </div>
                         </form>
                         <Link to="/login">Login</Link>
+
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
 
