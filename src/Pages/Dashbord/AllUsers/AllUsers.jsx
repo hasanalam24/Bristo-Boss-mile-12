@@ -19,7 +19,7 @@ const AllUsers = () => {
             return res.data
         }
     })
-    // console.log(users.length)
+
 
     const handleDelete = id => {
         Swal.fire({
