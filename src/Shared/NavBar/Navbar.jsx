@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { TiShoppingCart } from "react-icons/ti";
 import useCart from "../../Hooks/useCart";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
     const { user, signOutUser } = useContext(AuthContext)
@@ -27,7 +28,13 @@ const Navbar = () => {
 
     const handleLogout = () => {
         signOutUser()
-        alert('logOut done')
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: 'User LogOut Successfully',
+            showConfirmButton: false,
+            timer: 1500
+        });
     }
     return (
         <div>

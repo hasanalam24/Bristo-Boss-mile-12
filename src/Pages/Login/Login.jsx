@@ -4,6 +4,7 @@ import { AuthContext } from '../../Providers/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import SocialLogin from '../../Components/SocialLogin/SocialLogin';
+import Swal from 'sweetalert2';
 
 const Login = () => {
 
@@ -32,7 +33,13 @@ const Login = () => {
         signInUser(email, password)
             .then(result => {
                 console.log(result.user)
-                alert('login done')
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `Login SuccessFully`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 navigate(from)
             })
             .catch(error => {
