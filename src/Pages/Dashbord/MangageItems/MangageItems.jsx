@@ -3,6 +3,7 @@ import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 import useMenu from "../../../Hooks/UseHooksMenu";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const MangageItems = () => {
 
@@ -12,7 +13,7 @@ const MangageItems = () => {
 
 
 
-    const handleDelete = id => {
+    const handleDelete = item => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -21,23 +22,26 @@ const MangageItems = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
 
-                axiosSecure.delete(`/menu/${id}`)
-                    .then(res => {
-                        console.log(res.data)
-                        if (res.data.deletedCount > 0) {
+                const res = await axiosSecure.delete(`/menu/${item._id}`)
+                if (res.data.deletedCount > 0) {
 
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success"
+                    Swal.fire({
+                        position: "top-end",
+                        title: `${item.name} has been Deleted!`,
 
-                            });
-                            refetch()
-                        }
-                    })
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 1500,
+
+                    });
+                    refetch()
+                }
+                console.log(res.data)
+
+
             }
         });
     }
@@ -84,16 +88,18 @@ const MangageItems = () => {
                                     </td>
                                     <td>${item.price}</td>
                                     <td>
-                                        <button
+                                        <Link to={`/dashboard/updatedItem/${item._id}`}>
+                                            <button
 
-                                            className="btn bg-orange-500 btn-md ">
-                                            <FaEdit className="text-white text-md"></FaEdit>
+                                                className="btn bg-orange-500 btn-md ">
+                                                <FaEdit className="text-white text-md"></FaEdit>
 
-                                        </button>
+                                            </button>
+                                        </Link>
                                     </td>
                                     <td>
                                         <button
-                                            onClick={() => handleDelete(item._id)}
+                                            onClick={() => handleDelete(item)}
                                             className="btn btn-ghost btn-lg text-red-600">
                                             <FaTrash></FaTrash>
                                         </button>
