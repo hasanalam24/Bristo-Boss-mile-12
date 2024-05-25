@@ -11,7 +11,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const UpdatedItem = () => {
     const { register, handleSubmit, reset } = useForm()
-    const { name, category, price, recipe } = useLoaderData()
+    const { name, category, price, recipe, _id } = useLoaderData()
     const axiosSecure = useAxiosSecure()
     const axiosCommon = useAxiosCommon()
     const onSubmit = async (data) => {
@@ -35,16 +35,16 @@ const UpdatedItem = () => {
                 image: res.data.data.display_url
             }
             //
-            const menuRes = await axiosSecure.post('/menu', menuItem)
-            if (menuRes.data.insertedId) {
+            const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem)
+            if (menuRes.data.modifiedCount > 0) {
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `${data.name} added to the menu`,
+                    title: `${data.name} updated to the menu`,
                     showConfirmButton: false,
                     timer: 1500
                 });
-                reset()
+                // reset()
             }
 
         }
