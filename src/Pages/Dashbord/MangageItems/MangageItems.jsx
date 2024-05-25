@@ -6,11 +6,13 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const MangageItems = () => {
 
-    const [menu] = useMenu()
+    const [menu, refetch] = useMenu()
 
     const axiosSecure = useAxiosSecure()
 
-    const handleDelete = (id) => {
+
+
+    const handleDelete = id => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -19,22 +21,27 @@ const MangageItems = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then(async (result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
 
-                const res = await axiosSecure.delete(`/menu/${id}`)
-                console.log(res.data)
-                if (res.data.deletedCount) {
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your item has been deleted.",
-                        icon: "success"
+                axiosSecure.delete(`/menu/${id}`)
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data.deletedCount > 0) {
 
-                    });
-                }
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+
+                            });
+                            refetch()
+                        }
+                    })
             }
         });
     }
+
 
     return (
         <div>

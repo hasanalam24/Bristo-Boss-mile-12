@@ -44,7 +44,7 @@ const useAxiosSecure = () => {
         // console.log('error in the intercepts', status)
 
         //for 401 or 403 logOut the user and move the user to the login page
-        if (status === 401 || status === 403) {
+        if (status === 401) {
             await signOutUser()
             navigate('/login')
         }
