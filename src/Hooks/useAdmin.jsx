@@ -12,7 +12,7 @@ const useAdmin = () => {
             const res = await axiosSecure.get(`/users/admin/${user.email}`)
             //ekhane api secure korar jonno headers use kora hoi nai , karon seta interceptors ei useAxiosSecure er moddei kora hoise
 
-            console.log(res.data)
+
             return res.data?.admin
         }
     })

@@ -16,7 +16,7 @@ const FoodCart = ({ item }) => {
     const handleAddCart = food => {
         if (user && user.email) {
             //send cart item to the database
-            console.log(user.email, food)
+            // console.log(user.email, food)
             const cartItem = {
                 menuId: _id,
                 email: user.email,
