@@ -51,7 +51,7 @@ const CheckOutForm = () => {
             setError(error.message)
         }
         else {
-            console.log('payment method error', paymentMethod)
+            console.log('payment method', paymentMethod)
             setError('')
         }
 
@@ -76,6 +76,23 @@ const CheckOutForm = () => {
             if (paymentIntent.status === "succeeded") {
                 console.log('transitionId', paymentIntent.id)
                 setTransactionId(paymentIntent.id)
+
+
+                //now save the payment in the database
+                const payment = {
+                    email: user.email,
+                    price: totalPrice,
+                    transactionId: paymentIntent.id,
+                    date: new Date(), // utc date convert use moment js to
+                    cartId: cart.map(item => item._id),
+                    menuItemId: cart.map(item => item.menuId),
+                    status: 'pending'
+                }
+
+                const res = await axiosSecure.post('/payments', payment)
+                console.log('payment save to db', res.data)
+
+
             }
         }
     }
