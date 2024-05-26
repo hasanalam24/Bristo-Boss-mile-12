@@ -2,9 +2,11 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useCart from "../../../Hooks/useCart";
+import useAuth from "../../../Hooks/useAuth";
 
 const CheckOutForm = () => {
 
+    const { user } = useAuth()
     const [error, setError] = useState('')
     const [clientSecret, setClientSecret] = useState('')
     const stripe = useStripe()
@@ -52,6 +54,28 @@ const CheckOutForm = () => {
             setError('')
         }
 
+        //confirm payment
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret,
+            {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        email: user?.email || 'anonymouse',
+                        name: user?.displayName || 'anonymouse'
+                    }
+                }
+            }
+        )
+
+        if (confirmError) {
+            console.log('confirm error')
+        }
+        else {
+            console.log('payment intent', paymentIntent)
+            if (paymentIntent.status === "succeeded") {
+                console.log('transitionId', paymentIntent.id)
+            }
+        }
     }
 
     return (
