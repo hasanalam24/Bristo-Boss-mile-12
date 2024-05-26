@@ -8,6 +8,7 @@ const CheckOutForm = () => {
 
     const { user } = useAuth()
     const [error, setError] = useState('')
+    const [transactionId, setTransactionId] = useState('')
     const [clientSecret, setClientSecret] = useState('')
     const stripe = useStripe()
     const element = useElements()
@@ -74,6 +75,7 @@ const CheckOutForm = () => {
             console.log('payment intent', paymentIntent)
             if (paymentIntent.status === "succeeded") {
                 console.log('transitionId', paymentIntent.id)
+                setTransactionId(paymentIntent.id)
             }
         }
     }
@@ -102,6 +104,10 @@ const CheckOutForm = () => {
             <button className="btn btn-sm btn-primary my-6" type="submit" disabled={!stripe || !clientSecret}>Pay</button>
 
             <p className="text-red-600">{error}</p>
+
+            {
+                transactionId && <p className="text-green-600">Your TransactionId: {transactionId}</p>
+            }
         </form>
     );
 };
