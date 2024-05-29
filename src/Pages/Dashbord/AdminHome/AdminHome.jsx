@@ -17,10 +17,18 @@ const AdminHome = () => {
         }
     })
 
+    const { data: chartData = [] } = useQuery({
+        queryKey: ['order-stats'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/order-stats')
+            return res.data
+        }
+    })
+
     if (isPending) {
         return <span>Loading....</span>
     }
-    console.log(stats)
+    // console.log(stats)
 
     return (
         <div>

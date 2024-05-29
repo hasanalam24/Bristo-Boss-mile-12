@@ -16,7 +16,7 @@ const Login = () => {
 
     const from = location.state?.from?.pathname || '/'
 
-    console.log('state in the location login page:', location.state)
+    // console.log('state in the location login page:', location.state)
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -28,7 +28,7 @@ const Login = () => {
         const email = form.email.value
         const password = form.password.value
 
-        console.log(email, password)
+        // console.log(email, password)
 
         signInUser(email, password)
             .then(result => {
